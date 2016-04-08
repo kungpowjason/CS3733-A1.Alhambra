@@ -1,7 +1,5 @@
 package ywu4;
 
-import heineman.klondike.KlondikeDeckController;
-import ks.client.gamefactory.GameWindow;
 import ks.common.controller.SolitaireMouseMotionAdapter;
 import ks.common.games.Solitaire;
 import ks.common.games.SolitaireUndoAdapter;

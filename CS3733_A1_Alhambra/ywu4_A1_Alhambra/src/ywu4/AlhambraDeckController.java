@@ -1,9 +1,7 @@
 package ywu4;
 
-import heineman.Klondike;
 import heineman.klondike.DealCardMove;
 import ks.common.controller.SolitaireReleasedAdapter;
-import ks.common.model.Deck;
 import ks.common.model.Move;
 import ks.common.model.MultiDeck;
 import ks.common.model.Pile;
@@ -45,11 +43,10 @@ public class AlhambraDeckController extends SolitaireReleasedAdapter {
 		}
 		else {
 			// Attempting to ResetDeckMove since deck is empty
-			Move m = new ResetDeckMove(deck, waste, theGame.getNumDeals());
+			Move m = new ResetDeckMove(deck, waste);
 			if (m.doMove(theGame)) {
 				theGame.pushMove(m); // Successful Deal one card
 				theGame.refreshWidgets(); // refresh updated widgets.
-				theGame.setNumDeals(theGame.getNumDeals()+1);
 			}
 		}
 	}

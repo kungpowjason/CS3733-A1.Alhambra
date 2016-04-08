@@ -1,7 +1,5 @@
 package ywu4;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -10,7 +8,7 @@ import ks.common.model.Card;
 import ks.common.model.Deck;
 import ks.launcher.Main;
 
-public class TestDealCardMove extends TestCase{
+public class TestResetDeckMove extends TestCase{
 
 	@Test
 	public void test() {
@@ -18,22 +16,24 @@ public class TestDealCardMove extends TestCase{
 		GameWindow gw = Main.generateWindow(game, Deck.OrderBySuit);
 		
 		Card topCard = game.deck.peek();
-		DealCardMove dcm = new DealCardMove(game.deck, game.waste);
 		
-		assertTrue(dcm.valid(game));
+		int maxDeckCards = game.deck.count();
 		
-		assertEquals(64, game.deck.count());
+		//empties deck to waste
+		for(int i = 0; i < maxDeckCards; i++){
+			game.waste.add(game.deck.get());
+		}
 		
-		dcm.doMove(game);
+		assertTrue(game.deck.empty());
 		
-		assertEquals(topCard, game.waste.peek());
-		int value = game.getNumLeft().getValue();
+		ResetDeckMove rdm = new ResetDeckMove(game.deck, game.waste);
 		
-		assertEquals(63,value);
+		assertTrue(rdm.valid(game));
 		
-		dcm.undo(game);
+		rdm.doMove(game);
 		
-		assertEquals(64, game.deck.count());
+		assertEquals(1,game.getNumDeals());
+		
 		
 	}
 

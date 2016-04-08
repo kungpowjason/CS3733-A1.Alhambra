@@ -14,12 +14,10 @@ import ks.common.model.Pile;
 public class ResetDeckMove extends Move {
 	MultiDeck deck;
 	Pile waste;
-	int numDeals;
 
-	public ResetDeckMove(MultiDeck deck, Pile waste, int numDeals) {
+	public ResetDeckMove(MultiDeck deck, Pile waste) {
 		this.deck = deck;
 		this.waste = waste;
-		this.numDeals = numDeals;
 	}
 
 	@Override
@@ -27,12 +25,14 @@ public class ResetDeckMove extends Move {
 		if (!valid(game)) {
 			return false;
 		}
+		Alhambra agame = (Alhambra) game;
 		// flip waste pile to deck
 		int sizeWaste = waste.count();
 		for (int i = 0; i < sizeWaste; i++) {
 			deck.add(waste.get());
 		}
 		// update the number of cards in deck
+		agame.setNumDeals(agame.getNumDeals()+1);
 		game.updateNumberCardsLeft(sizeWaste);
 		return true;
 	}
@@ -53,7 +53,8 @@ public class ResetDeckMove extends Move {
 	public boolean valid(Solitaire game) {
 		// if the deck is empty and the deck has not been re-dealt more than
 		// once
-		if (deck.empty() && (numDeals < 2)) {
+		Alhambra agame = (Alhambra) game;
+ 		if (deck.empty() && (agame.getNumDeals() < 2)) {
 			return true;
 		}
 		;
