@@ -11,8 +11,11 @@ import ks.common.model.Pile;
  *
  */
 public class DealCardMove extends Move{
+	// source deck of cards
 	MultiDeck deck;
+	// target waste pile
 	Pile waste;
+	// Constructor comment
 	public DealCardMove(MultiDeck deck, Pile waste){
 		this.deck = deck;
 		this.waste = waste;
@@ -22,22 +25,27 @@ public class DealCardMove extends Move{
 		if(!valid(game)){
 			return false;
 		}
+		// adds card from top of deck to top of waste pile
 		Card card = deck.get();
 		waste.add(card);
+		// update the number of cards left in the deck
 		game.updateNumberCardsLeft(-1);
 		return true;
 	}
 
 	@Override
 	public boolean undo(Solitaire game) {
+		// adds card from top of waste pile to top of deck
 		Card c = waste.get();
 		deck.add(c);
+		// update the number of cards left in the deck
 		game.updateNumberCardsLeft(+1);
 		return true;
 	}
 
 	@Override
 	public boolean valid(Solitaire game) {
+		// valid if deck is not empty
 		return !deck.empty();
 	}
 

@@ -35,7 +35,7 @@ public class Alhambra extends Solitaire {
 		return "ywu4 - Alhambra";
 	}
 
-	// @Override
+	@Override
 	// When all foundations have been built (1 pnt per card placed) 12 x 8 = 96
 	public boolean hasWon() {
 		return getScore().getValue() == 96;
@@ -52,7 +52,7 @@ public class Alhambra extends Solitaire {
 	public void initializeModel(int seed) {
 		// initial score is set to ZERO (every Solitaire game by default has a
 		// score)
-		// and there are 104 cards left.
+		// and there are 104 cards left in the deck.
 		numLeft = getNumLeft();
 		numLeft.setValue(104);
 		score = getScore();
@@ -77,8 +77,6 @@ public class Alhambra extends Solitaire {
 		// add waste pile element
 		waste = new Pile("waste");
 		model.addElement(waste);
-
-		updateScore(0);
 	}
 
 	public void initializeView() {
@@ -86,7 +84,7 @@ public class Alhambra extends Solitaire {
 		// Get the card artwork to be used. This is needed for the dimensions.
 		CardImages ci = getCardImages();
 
-		// add a deck to the view, shuffled
+		// add a deck to the view, not shuffled
 		deckView = new DeckView(deck);
 		deckView.setBounds(60 + 3 * ci.getWidth(), 100 + 2 * ci.getHeight(), ci.getWidth(), ci.getHeight());
 		container.addWidget(deckView);
@@ -94,16 +92,13 @@ public class Alhambra extends Solitaire {
 		// add foundation, reserve, and waste piles
 		for (int fndtnNum = 0; fndtnNum < 4; fndtnNum++) {
 			apileView[fndtnNum] = new PileView(apile[fndtnNum]);
-			apileView[fndtnNum].setBounds(20 + 20 * fndtnNum + (fndtnNum) * ci.getWidth(), 20, ci.getWidth(),
-					ci.getHeight());
+			apileView[fndtnNum].setBounds(20 + 20 * fndtnNum + (fndtnNum) * ci.getWidth(), 20, ci.getWidth(),ci.getHeight());
 			container.addWidget(apileView[fndtnNum]);
 			kpileView[fndtnNum] = new PileView(kpile[fndtnNum]);
-			kpileView[fndtnNum].setBounds(20 + 20 * (fndtnNum + 4) + (fndtnNum + 4) * ci.getWidth(), 20, ci.getWidth(),
-					ci.getHeight());
+			kpileView[fndtnNum].setBounds(20 + 20 * (fndtnNum + 4) + (fndtnNum + 4) * ci.getWidth(), 20, ci.getWidth(),ci.getHeight());
 			container.addWidget(kpileView[fndtnNum]);
 
 		}
-
 		for (int rsrvNum = 0; rsrvNum < 8; rsrvNum++) {
 			reserveView[rsrvNum] = new PileView(reserve[rsrvNum]);
 			reserveView[rsrvNum].setBounds(20 + 20 * rsrvNum + rsrvNum * ci.getWidth(), ci.getHeight() + 60,
@@ -115,6 +110,7 @@ public class Alhambra extends Solitaire {
 		wasteView.setBounds(120 + 4 * ci.getWidth(), 100 + 2 * ci.getHeight(), ci.getWidth(), ci.getHeight());
 		addViewWidget(wasteView);
 
+		// add score and number of cards left view
 		scoreView = new IntegerView(getScore());
 		scoreView.setBounds(20 + ci.getWidth(), 120 + 2 * ci.getHeight(), 100, 60);
 		addViewWidget(scoreView);
@@ -126,7 +122,7 @@ public class Alhambra extends Solitaire {
 	}
 
 	public void initializeController() {
-		// Initialize Controllers for DeckView
+		// Initialize Controllers for deckView
 		deckView.setMouseAdapter(new AlhambraDeckController(this, deck, waste));
 		deckView.setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
 		deckView.setUndoAdapter(new SolitaireUndoAdapter(this));
@@ -136,7 +132,7 @@ public class Alhambra extends Solitaire {
 		wasteView.setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
 		wasteView.setUndoAdapter(new SolitaireUndoAdapter(this));
 		
-		// Initialize Controllers for Foundations; Ace and King Piles
+		// Initialize Controllers for the Foundations; Ace and King PileViews
 		for (int i = 0; i < 4; i++) {
 			apileView[i].setMouseAdapter(new AlhambraAcePileController(this,apileView[i]));
 			apileView[i].setMouseMotionAdapter(new SolitaireMouseMotionAdapter(this));
@@ -161,7 +157,7 @@ public class Alhambra extends Solitaire {
 		initializeController();
 
 		
-		// finds 4 different suit aces in deck
+		// finds 4 different suit aces in deck, removes and updates number of cards left
 		int maxDeckCards = deck.count();
 		for(int i =0; i < maxDeckCards; i++){
 			if((deck.peek().getRank() == Card.ACE) && (deck.peek().getSuit() == Card.CLUBS) && apile[0].count() < 1){
@@ -181,7 +177,7 @@ public class Alhambra extends Solitaire {
 			}
 		}
 		updateNumberCardsLeft(-4);
-		// finds 4 different suit kings from waste pile
+		// finds 4 different suit kings from waste pile removes and updates number of cards left
 		int maxWasteCards = waste.count();
 		for(int i =0; i < maxWasteCards; i++){
 			if((waste.peek().getRank() == Card.KING) && (waste.peek().getSuit() == Card.CLUBS) && kpile[0].count() < 1){
@@ -201,7 +197,8 @@ public class Alhambra extends Solitaire {
 			}
 		}
 		updateNumberCardsLeft(-4);
-		// fill each reserve with 4 cards
+		
+		// fill each reserve with 4 cards and updates number of cards left
 		for(int i =0; i < 8; i++){
 			for(int j = 0; j < 4; j++){
 				reserve[i].add(deck.get());

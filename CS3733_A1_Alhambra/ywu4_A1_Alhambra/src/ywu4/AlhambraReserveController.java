@@ -14,6 +14,8 @@ public class AlhambraReserveController extends SolitaireReleasedAdapter {
 
 	/** The game. */
 	protected Alhambra theGame;
+	
+	// Reserve pile being controlled
 	protected PileView src;
 
 	/**
@@ -65,7 +67,7 @@ public class AlhambraReserveController extends SolitaireReleasedAdapter {
 		Widget w = c.getActiveDraggingObject();
 		if (w != Container.getNothingBeingDragged()) {
 			System.err.println(
-					"ReserveController::mousePressed(): Unexpectedly encountered a Dragging Object during a Mouse press.");
+					"AlhambraReserveController::mousePressed(): Unexpectedly encountered a Dragging Object during a Mouse press.");
 			return;
 		}
 

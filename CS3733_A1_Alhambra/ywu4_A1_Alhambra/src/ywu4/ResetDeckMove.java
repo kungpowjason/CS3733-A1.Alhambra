@@ -8,13 +8,15 @@ import ks.common.model.Pile;
 
 /**
  * 
- * Move card from top of deck to top of waste pile
+ * Reset the deck by turning over the waste pile and putting its card onto deck
  *
  */
 public class ResetDeckMove extends Move {
+	// target deck
 	MultiDeck deck;
+	// source waste pile
 	Pile waste;
-
+	// Constructor comment
 	public ResetDeckMove(MultiDeck deck, Pile waste) {
 		this.deck = deck;
 		this.waste = waste;
@@ -31,7 +33,7 @@ public class ResetDeckMove extends Move {
 		for (int i = 0; i < sizeWaste; i++) {
 			deck.add(waste.get());
 		}
-		// update the number of cards in deck
+		// update the number of cards in deck and increment number of deals by 1
 		agame.setNumDeals(agame.getNumDeals()+1);
 		game.updateNumberCardsLeft(sizeWaste);
 		return true;
@@ -39,12 +41,14 @@ public class ResetDeckMove extends Move {
 
 	@Override
 	public boolean undo(Solitaire game) {
+		Alhambra agame = (Alhambra) game;
 		// flip deck back into waste
 		int sizeDeck = deck.count();
 		for (int i = 0; i < sizeDeck; i++) {
 			waste.add(deck.get());
 		}
-		// update number of cards in deck to previous
+		// update the number of cards in deck and decrement number of deals by 1
+		agame.setNumDeals(agame.getNumDeals()-1);
 		game.updateNumberCardsLeft(-sizeDeck);
 		return true;
 	}
@@ -57,7 +61,6 @@ public class ResetDeckMove extends Move {
  		if (deck.empty() && (agame.getNumDeals() < 2)) {
 			return true;
 		}
-		;
 		return false;
 	}
 

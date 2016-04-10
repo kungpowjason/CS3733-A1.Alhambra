@@ -18,7 +18,7 @@ public class AlhambraWasteController extends java.awt.event.MouseAdapter {
 	PileView src;
 
 	/**
-	 * FoundationController constructor comment.
+	 * AlhambraWasteController constructor comment.
 	 */
 	public AlhambraWasteController(Alhambra theGame, PileView waste) {
 		super();
@@ -30,10 +30,6 @@ public class AlhambraWasteController extends java.awt.event.MouseAdapter {
 	/**
 	 * Coordinate reaction to the completion of a Drag Event.
 	 * <p>
-	 * A bit of a challenge to construct the appropriate move, because cards can
-	 * be dragged both from the WastePile (as a CardView object) and the
-	 * BuildablePileView (as a ColumnView).
-	 * 
 	 * @param me
 	 *            java.awt.event.MouseEvent
 	 */
@@ -42,15 +38,15 @@ public class AlhambraWasteController extends java.awt.event.MouseAdapter {
 		/** Return if there is no card being dragged chosen. */
 		Widget draggingWidget = c.getActiveDraggingObject();
 		if (draggingWidget == Container.getNothingBeingDragged()) {
-			System.err.println("FoundationController::mouseReleased() unexpectedly found nothing being dragged.");
+			System.err.println("AlhambraWasteController::mouseReleased() unexpectedly found nothing being dragged.");
 			c.releaseDraggingObject();
 			return;
 		}
 
-		/** Recover the from BuildablePile OR waste Pile */
+		/** Recover the from reserve Pile */
 		Widget fromWidget = c.getDragSource();
 		if (fromWidget == null) {
-			System.err.println("FoundationController::mouseReleased(): somehow no dragSource in container.");
+			System.err.println("AlhambraWasteController::mouseReleased(): somehow no dragSource in container.");
 			c.releaseDraggingObject();
 			return;
 		}
@@ -62,6 +58,7 @@ public class AlhambraWasteController extends java.awt.event.MouseAdapter {
 		CardView cardView = (CardView) draggingWidget;
 		Card theCard = (Card) cardView.getModelElement();
 
+		// create the move objet
 		Move move = new CardToWasteMove(reserve, theCard, waste);
 
 		if (move.doMove(theGame)) {

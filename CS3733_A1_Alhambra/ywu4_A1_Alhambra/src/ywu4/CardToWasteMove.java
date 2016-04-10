@@ -11,10 +11,13 @@ import ks.common.model.Pile;
  *
  */
 public class CardToWasteMove extends Move{
+	// reserve/source pile
 	Pile reserve;
+	// waste pile target
 	Pile waste;
+	// card of interest
 	Card cardBeingDragged;
-	
+	// Constructor comment
 	public CardToWasteMove(Pile from,Card cbd, Pile to){
 		this.reserve = from;
 		this.waste = to;
@@ -46,10 +49,12 @@ public class CardToWasteMove extends Move{
 		boolean sameSuit = true;
 		boolean rankDiff = true;
 		
+		// checks the target pile's top card
 		Card targetCard = waste.peek();
-		//System.out.println(waste.count());
 		
+		// finds difference in rank
 		int diff = Math.abs(cardBeingDragged.getRank() - targetCard.getRank());
+		
 		// logic for card moves from reserve to waste
 		if(cardBeingDragged.getSuit() != targetCard.getSuit()){
 			sameSuit = false; 

@@ -32,7 +32,7 @@ public class AlhambraDeckController extends SolitaireReleasedAdapter {
 	 * drag is ever achieved, and we simply deal upon the press.
 	 */
 	public void mousePressed(java.awt.event.MouseEvent me) {
-
+		// if deck is not empty, then deal a card
 		if (!deck.empty()) {
 			// Attempting a DealCardMove since deck is not empty
 			Move m = new DealCardMove(deck, waste);
@@ -41,6 +41,7 @@ public class AlhambraDeckController extends SolitaireReleasedAdapter {
 				theGame.refreshWidgets(); // refresh updated widgets.
 			}
 		}
+		// if deck empty then attempt to reset deck
 		else {
 			// Attempting to ResetDeckMove since deck is empty
 			Move m = new ResetDeckMove(deck, waste);
