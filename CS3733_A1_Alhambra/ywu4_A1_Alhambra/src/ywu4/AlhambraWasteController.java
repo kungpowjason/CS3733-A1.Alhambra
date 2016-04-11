@@ -58,7 +58,7 @@ public class AlhambraWasteController extends java.awt.event.MouseAdapter {
 		CardView cardView = (CardView) draggingWidget;
 		Card theCard = (Card) cardView.getModelElement();
 
-		// create the move objet
+		// create the move object
 		Move move = new CardToWasteMove(reserve, theCard, waste);
 
 		if (move.doMove(theGame)) {

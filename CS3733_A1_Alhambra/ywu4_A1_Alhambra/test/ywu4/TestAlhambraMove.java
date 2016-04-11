@@ -10,7 +10,7 @@ import ks.common.model.Card;
 import ks.common.model.Deck;
 import ks.launcher.Main;
 
-public class TestAlhambra extends TestCase {
+public class TestAlhambraMove extends TestCase {
 
 	Alhambra game;
 	GameWindow gw;

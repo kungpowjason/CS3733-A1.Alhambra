@@ -32,19 +32,19 @@ public class AlhambraDeckController extends SolitaireReleasedAdapter {
 	 * drag is ever achieved, and we simply deal upon the press.
 	 */
 	public void mousePressed(java.awt.event.MouseEvent me) {
-		/* Note** it is important that the reset deck move is attempted before the deal card move,
-		otherwise it will deal card and then reset in the same mouse press
+		/* Note** if else if is there because only one move should be attempted each press
 		*/
-		// Attempting to ResetDeckMove
-		Move rdm = new ResetDeckMove(deck, waste);
-		if (rdm.doMove(theGame)) {
-			theGame.pushMove(rdm); // Successful Reset deck
-			theGame.refreshWidgets(); // refresh updated widgets.
-		}
 		// Attempting a DealCardMove
 		Move dcm = new DealCardMove(deck, waste);
+		Move rdm = new ResetDeckMove(deck, waste);
+		// Attempting a DealCardMove
 		if (dcm.doMove(theGame)) {
 			theGame.pushMove(dcm); // Successful Deal one card
+			theGame.refreshWidgets(); // refresh updated widgets.
+		}
+		// Attempting to ResetDeckMove
+		else if (rdm.doMove(theGame)) {
+			theGame.pushMove(rdm); // Successful Reset deck
 			theGame.refreshWidgets(); // refresh updated widgets.
 		}
 	}
