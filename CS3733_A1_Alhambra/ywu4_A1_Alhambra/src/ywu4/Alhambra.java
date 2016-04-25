@@ -211,7 +211,7 @@ public class Alhambra extends Solitaire {
 	public static void main(String[] args) {
 		// Seed is to ensure we get the same initial cards every time.
 		// Here the seed is to "order by suit."
-		Main.generateWindow(new Alhambra(), Deck.OrderBySuit);
+		 Main.generateWindow(new Alhambra(), Deck.OrderBySuit);
 	}
 
 }
