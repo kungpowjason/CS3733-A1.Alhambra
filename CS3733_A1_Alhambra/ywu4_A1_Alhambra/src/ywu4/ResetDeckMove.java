@@ -8,7 +8,7 @@ import ks.common.model.Pile;
 
 /**
  * 
- * Reset the deck by turning over the waste pile and putting its card onto deck
+ * Reset the deck by turning over the waste pile and putting its card onto deck.
  *
  */
 public class ResetDeckMove extends Move {

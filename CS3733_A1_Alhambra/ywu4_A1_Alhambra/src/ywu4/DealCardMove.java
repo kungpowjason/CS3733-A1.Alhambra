@@ -7,7 +7,7 @@ import ks.common.model.MultiDeck;
 import ks.common.model.Pile;
 /**
  * 
- * Move card from top of deck to top of waste pile
+ * Move card from top of deck to top of waste pile.
  *
  */
 public class DealCardMove extends Move{
